@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+import { Button } from '../components/ui/button';
+import { Input } from '../components/ui/input';
+import { Label } from '../components/ui/label';
 import { Droplet, ArrowLeft } from 'lucide-react';
-import { useAuth, API } from '@/App';
+import { useAuth, API } from '../App';
 import { toast } from 'sonner';
 
 const LoginPage = () => {
