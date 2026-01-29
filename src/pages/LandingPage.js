@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { Droplet, Award, TrendingUp, Users, Phone, Mail, ArrowRight } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { Button } from '../components/ui/button';
 import { useAuth } from '@/App';
 
 const LandingPage = () => {
