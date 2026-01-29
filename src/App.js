@@ -5,8 +5,8 @@ import './pages/App.css';
 import LandingPage from './pages/LandingPage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
-import CustomerDashboard from './pages/CustomerDashboard';
 import AdminDashboard from './pages/AdminDashboard';
+import DashboardSelector from './pages/DashboardSelector'; // New component for multi-role handling
 import { Toaster } from 'sonner';
 
 // Correct Backend Link for BlueCust
@@ -54,14 +54,28 @@ function App() {
             <Route path="/" element={<LandingPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
+            
+            {/* The single dashboard route now handles Ventures vs Suppliers */}
             <Route 
               path="/dashboard" 
-              element={<ProtectedRoute><CustomerDashboard /></ProtectedRoute>} 
+              element={
+                <ProtectedRoute>
+                  <DashboardSelector />
+                </ProtectedRoute>
+              } 
             />
+            
             <Route 
               path="/admin" 
-              element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} 
+              element={
+                <ProtectedRoute>
+                  <AdminDashboard />
+                </ProtectedRoute>
+              } 
             />
+            
+            {/* Fallback for undefined routes */}
+            <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </BrowserRouter>
         <Toaster position="top-right" />
