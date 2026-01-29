@@ -1,142 +1,78 @@
-import { BrandedBottle } from '../components/ui/BrandedBottle';
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { Droplet, Award, TrendingUp, Users, Phone, Mail, ArrowRight, MessageSquare, CheckCircle } from 'lucide-react';
+import { Droplet, ShieldCheck, Zap, Banknote, ArrowRight } from 'lucide-react';
 import { Button } from '../components/ui/button';
-import { Input } from '../components/ui/input';
-import { Textarea } from '../components/ui/textarea';
 import { useAuth } from '../App';
-import { toast } from 'sonner';
 
 const LandingPage = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
-  const [queryForm, setQueryForm] = useState({ name: '', email: '', message: '' });
 
-  const handleQuerySubmit = (e) => {
-    e.preventDefault();
-    toast.success("Query sent successfully! Aryan's team will contact you soon.");
-    setQueryForm({ name: '', email: '', message: '' });
+  const fadeInUp = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0 }
   };
 
   return (
-    <div className="min-h-screen bg-[#F8FAFC]">
-      {/* Navigation */}
-      <nav className="fixed top-0 w-full z-50 backdrop-blur-md bg-white/70 border-b border-blue-100">
-        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-          <div className="flex items-center space-x-2">
-            <Droplet className="w-8 h-8 text-primary" />
-            <span className="text-2xl font-syne font-bold text-primary-900">BlueCust</span>
-          </div>
-          <div className="flex items-center space-x-4">
-            {user ? (
-              <Button onClick={() => navigate(user.is_admin ? '/admin' : '/dashboard')} className="rounded-full bg-primary text-white font-bold px-8">Dashboard</Button>
-            ) : (
-              <Button onClick={() => navigate('/login')} variant="ghost" className="text-primary-900 font-bold">Login</Button>
-            )}
-            <Button onClick={() => navigate('/register')} className="rounded-full bg-secondary-accent text-white font-bold px-8 shadow-lg shadow-orange-200">Get Started</Button>
-          </div>
+    <div className="min-h-screen bg-gradient-to-br from-primary-50 via-white to-blue-50">
+      <nav className="fixed top-0 w-full z-50 backdrop-blur-lg bg-white/80 border-b border-slate-200/50 px-6 py-4 flex items-center justify-between">
+        <div className="flex items-center space-x-2">
+          <Droplet className="w-8 h-8 text-primary-500" />
+          <span className="text-2xl font-syne font-bold text-primary-900">BlueCust</span>
+        </div>
+        <div className="flex items-center space-x-4">
+          {user ? (
+            <Button onClick={() => navigate('/dashboard')} className="rounded-full bg-primary text-white font-bold px-8">Dashboard</Button>
+          ) : (
+            <Button onClick={() => navigate('/login')} variant="ghost" className="text-primary-900 font-bold">Login</Button>
+          )}
+          <Button onClick={() => navigate('/register')} className="rounded-full bg-gradient-to-r from-primary-500 to-cyan-400 text-white font-bold px-8 shadow-lg">Get Started</Button>
         </div>
       </nav>
 
-      {/* Hero & Dynamic Bottle Section */}
-      <section className="pt-32 pb-24 px-6 overflow-hidden bg-gradient-to-b from-blue-50 to-white">
-        <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
-          <motion.div initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }}>
-            <h1 className="text-6xl lg:text-7xl font-syne font-black text-primary-900 leading-[1.1] mb-6">
-              Build Your Brand <br/>
-              <span className="text-primary italic">One Bottle </span> 
-              at a Time
+      {/* Restore Original Hero */}
+      <section className="pt-32 pb-24 px-6 relative overflow-hidden text-center md:text-left">
+        <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center relative z-10">
+          <motion.div initial="hidden" animate="visible" variants={fadeInUp}>
+            <h1 className="text-5xl lg:text-7xl font-syne font-bold text-primary-900 leading-tight mb-6">
+              Build Your Brand <span className="block bg-gradient-to-r from-secondary-900 to-primary-500 bg-clip-text text-transparent">One Bottle at a Time</span>
             </h1>
-            <p className="text-xl text-slate-600 mb-8 leading-relaxed">
-              Stop promoting generic brands. We help ventures claim their identity through custom branding and premium hydration.
-            </p>
-            <div className="flex items-center space-x-4">
-               <div className="p-4 bg-white rounded-2xl shadow-xl border border-blue-50">
-                  <p className="text-sm text-slate-500 font-bold uppercase tracking-wider">Starting From</p>
-                  <p className="text-4xl font-black text-secondary-accent">₹16.00</p>
-               </div>
-               <Button onClick={() => navigate('/register')} className="h-16 px-10 rounded-2xl bg-primary text-white text-lg font-bold shadow-2xl shadow-blue-200">Start Branding <ArrowRight className="ml-2"/></Button>
-            </div>
+            <p className="text-lg text-slate-600 mb-8 max-w-lg">Stop promoting other brands. Claim your identity with custom hydration solutions for your hotel or restaurant.</p>
+            <Button onClick={() => navigate('/register')} className="rounded-full bg-primary text-white font-bold px-8 py-6 text-lg shadow-xl">Start Branding Now <ArrowRight className="ml-2"/></Button>
           </motion.div>
-
-          {/* DYNAMIC BOTTLE MOCKUP */}
-          <motion.div animate={{ y: [0, -20, 0] }} transition={{ duration: 4, repeat: Infinity }} className="relative flex justify-center">
-             <div className="w-56 h-96 bg-gradient-to-b from-blue-100/40 to-primary/20 rounded-[4rem] border-8 border-white shadow-[0_32px_64px_-12px_rgba(0,163,255,0.3)] relative overflow-hidden backdrop-blur-sm">
-                <div className="absolute top-1/2 left-0 w-full bg-white/95 py-6 shadow-xl border-y-2 border-blue-50 flex items-center justify-center">
-                   <span className="text-primary-900 font-syne font-black text-sm uppercase tracking-[0.2em] text-center px-4">
-                      {user?.business_name || "YOUR VENTURE NAME"}
-                   </span>
-                </div>
-                <div className="absolute bottom-0 w-full h-1/2 bg-primary/10 animate-pulse" />
-             </div>
+          <motion.div initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }}>
+            <img src="https://images.unsplash.com/photo-1638688569176-5b6db19f9d2a?auto=format&fit=crop&q=80&w=800" alt="Mockup" className="w-full rounded-3xl shadow-2xl animate-float" />
           </motion.div>
         </div>
       </section>
 
-      {/* USP Section (Replacing Meet Founder) */}
-      <section className="py-24 px-6 bg-primary-900">
+      {/* NEW: Our USP Section (Discarded Founder Section) */}
+      <section className="py-24 px-6 bg-white/60 backdrop-blur-md">
         <div className="max-w-7xl mx-auto">
-          <div className="grid md:grid-cols-2 gap-16 items-center">
-            <div className="space-y-8">
-              <h2 className="text-5xl font-syne font-bold text-white mb-4">How We Empower Your Venture</h2>
-              <div className="space-y-6">
-                {[
-                  { title: "Brand Endorsement", desc: "Turn a commodity into a powerful marketing tool. Your customers carry YOUR name, not ours." },
-                  { title: "Transparent Pricing", desc: "Standardized rate of ₹16 per bottle. We finalize high-volume discounts during the checkout process." },
-                  { title: "Supply Chain Excellence", desc: "We bridge the gap between manufacturers and suppliers to ensure your stock is never empty." }
-                ].map((usp, i) => (
-                  <div key={i} className="flex space-x-4 p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-md">
-                    <CheckCircle className="w-8 h-8 text-secondary-accent shrink-0" />
-                    <div>
-                      <h3 className="text-xl font-bold text-white mb-2">{usp.title}</h3>
-                      <p className="text-blue-100/70">{usp.desc}</p>
-                    </div>
-                  </div>
-                ))}
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-syne font-bold text-primary-900">Our USP</h2>
+            <p className="text-slate-500 mt-2">Why ventures choose BlueCust for their brand endorsements</p>
+          </div>
+          <div className="grid md:grid-cols-3 gap-8">
+            {[
+              { icon: ShieldCheck, title: "Pure Brand Ownership", desc: "Every bottle serves your brand image, ensuring 100% endorsement visibility." },
+              { icon: Banknote, title: "Standardized Pricing", desc: "Standard rate of ₹16 per bottle. Competitive, transparent, and high-value." },
+              { icon: Zap, title: "Dynamic Supply", desc: "Connected directly to manufacturers to ensure your stock never runs dry." }
+            ].map((item, i) => (
+              <div key={i} className="p-8 bg-white rounded-3xl shadow-xl border border-blue-50 text-center hover:scale-105 transition-all">
+                <item.icon className="w-16 h-16 text-primary-500 mx-auto mb-6" />
+                <h3 className="text-2xl font-bold text-primary-900 mb-4">{item.title}</h3>
+                <p className="text-slate-600 leading-relaxed">{item.desc}</p>
               </div>
-              <div className="pt-8 border-t border-white/10">
-                <p className="text-2xl font-syne text-white italic">"Driving identity through hydration."</p>
-                <p className="mt-2 text-primary font-bold">Aryan Singh — Founder, Director NextGenTech</p>
-              </div>
-            </div>
-            <div className="bg-white/5 rounded-[3rem] p-4 border border-white/10">
-              <img src="https://images.unsplash.com/photo-1602143302326-19220c2a742b?auto=format&fit=crop&q=80&w=800" className="rounded-[2.5rem] shadow-2xl" alt="Branding" />
-            </div>
+            ))}
+          </div>
+          <div className="mt-20 text-center border-t border-blue-100 pt-10">
+             <p className="text-xl font-syne font-bold text-primary-600">Aryan Singh — Founder | Director NextGenTech</p>
           </div>
         </div>
       </section>
-
-      {/* Connect With Us Form */}
-      <section id="contact" className="py-24 px-6 bg-white">
-        <div className="max-w-5xl mx-auto">
-          <div className="bg-gradient-to-br from-blue-50 to-white rounded-[3rem] p-12 border border-blue-100 shadow-2xl grid md:grid-cols-2 gap-12">
-            <div>
-              <MessageSquare className="w-16 h-16 text-primary mb-6" />
-              <h2 className="text-4xl font-syne font-bold text-primary-900 mb-4">Let's Talk Business</h2>
-              <p className="text-lg text-slate-600 mb-8">Have questions about bulk orders or custom stickers? Drop us a query and we'll reach out within 24 hours.</p>
-              <div className="space-y-4">
-                <div className="flex items-center space-x-3 text-primary-900 font-bold"><Phone className="w-5 h-5"/> <span>+91 7385751471</span></div>
-                <div className="flex items-center space-x-3 text-primary-900 font-bold"><Mail className="w-5 h-5"/> <span>aryanrajput7385@gmail.com</span></div>
-              </div>
-            </div>
-            <form onSubmit={handleQuerySubmit} className="space-y-4">
-              <Input placeholder="Full Name" value={queryForm.name} onChange={(e)=>setQueryForm({...queryForm, name: e.target.value})} required className="h-14 rounded-2xl bg-white border-blue-100" />
-              <Input type="email" placeholder="Business Email" value={queryForm.email} onChange={(e)=>setQueryForm({...queryForm, email: e.target.value})} required className="h-14 rounded-2xl bg-white border-blue-100" />
-              <Textarea placeholder="How can we help your brand?" value={queryForm.message} onChange={(e)=>setQueryForm({...queryForm, message: e.target.value})} required className="rounded-2xl bg-white border-blue-100" rows={5} />
-              <Button type="submit" className="w-full h-16 rounded-2xl bg-primary text-white font-bold text-lg shadow-xl shadow-blue-100">Send Query</Button>
-            </form>
-          </div>
-        </div>
-      </section>
-
-      <footer className="py-12 bg-slate-900 text-white text-center">
-         <p className="font-syne font-bold text-2xl mb-2 text-primary">BlueCust</p>
-         <p className="text-slate-400">© 2026 BlueCust. Aryan Singh Enterprises.</p>
-      </footer>
     </div>
   );
 };
-
 export default LandingPage;
