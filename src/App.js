@@ -9,7 +9,7 @@ import CustomerDashboard from './pages/CustomerDashboard';
 import AdminDashboard from './pages/AdminDashboard';
 import { Toaster } from 'sonner';
 
-// Correct Backend Link from your .env
+// Correct Backend Link for BlueCust
 const BACKEND_URL = "https://bluecast-api-vw9o.onrender.com";
 export const API = `${BACKEND_URL}/api`;
 
