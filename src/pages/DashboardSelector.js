@@ -1,25 +1,19 @@
 import React from 'react';
 import { useAuth } from '../App';
-import CustomerDashboard from './CustomerDashboard'; 
-import SupplierDashboard from './SupplierDashboard';
-import AdminDashboard from './AdminDashboard';
+import CustomerDashboard from './CustomerDashboard'; // For Hotels/Cafes
+import SupplierDashboard from './SupplierDashboard'; // For Water/Bottle Partners
+import AdminDashboard from './AdminDashboard'; // For your Admin control
 
 const DashboardSelector = () => {
   const { user } = useAuth();
   
-  // 1. If the user is a Super Admin (you), show the Admin Panel
-  if (user?.is_admin) {
-    return <AdminDashboard />;
-  }
+  // 1. Check for Admin
+  if (user?.is_admin) return <AdminDashboard />;
 
-  // 2. If user is a Venture (Hotel/Cafe), show the Order Dashboard
+  // 2. Separate Ventures (Hotels/Cafes) from Suppliers
   const isVenture = ['restaurant', 'hotel', 'cafe'].includes(user?.business_type);
-  if (isVenture) {
-    return <CustomerDashboard />;
-  }
   
-  // 3. Otherwise, show the Supplier Portal for manufacturers/water suppliers
-  return <SupplierDashboard />;
+  return isVenture ? <CustomerDashboard /> : <SupplierDashboard />;
 };
 
 export default DashboardSelector;
